@@ -19,13 +19,43 @@ spec:
         - name: minecraft
           image: ghcr.io/yyuhdev/proxy:latest
           imagePullPolicy: Always
-          env:
+            env:
             - name: SERVER_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
             - name: MEMORY
               value: "4096"
+            - name: MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-deployment
+                  key: mongodb-username
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-deployment
+                  key: mongodb-password
+            - name: MONGODB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-deployment
+                  key: mongodb-host
+            - name: MONGODB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-deployment
+                  key: mongodb-database
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-deployment
+                  key: redis-host
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-deployment
+                  key: redis-port
           ports:
             - containerPort: 19132
               name: minecraft
